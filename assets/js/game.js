@@ -4,6 +4,7 @@ var randomNumber = function(min, max) {
     return value;
 }
 
+//function to generate a player name
 var getPlayerName = function() {
     var name = "";
     while(name === "" || name === null) {
@@ -12,6 +13,8 @@ var getPlayerName = function() {
     console.log("Your robot's name is " + name);
     return name;
 }
+
+//player info
 var playerInfo = {
     name: getPlayerName(),
     health: 100,
@@ -46,6 +49,7 @@ var playerInfo = {
 
 console.log(playerInfo.name, playerInfo.attack, playerInfo.health)
 
+//enemy info
 var enemyInfo = [
     {
         name: "Roborto",
@@ -61,24 +65,62 @@ var enemyInfo = [
     }
 ]
 
+//shop function
+var shop = function () {
+    var shopOptionPrompt = window.prompt("Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice.");
+    switch (shopOptionPrompt) {
+        case "REFILL":
+        case "refill":
+            playerInfo.refillHealth();
+            break;
+        case "UPGRADE":
+        case "upgrade":
+            playerInfo.upgradeAttack();
+            break;
+        case "LEAVE":
+        case "leave":
+            window.alert("Leaving the store.");
+            break;
+        default:
+            window.alert("You did not pick a valid option. Try again.");
+            shop();
+            break;
+    
+    }
+}
+
+//asks player if they would like to fight or skip this battle
+var fightOrSkip = function() {
+    var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
+
+    if (promptFight === "" || promptFight === null) {
+        window.alert("You need to provide a valid answer! Please try again.");
+        return fightOrSkip();
+    }
+
+    promptFight = promptFight.toLowerCase();
+    //if player chooses to skip
+    if (promptFight === "skip") {
+        //confirm player wants to skip
+        var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+
+        //if yes (true) leave the fight
+        if (confirmSkip) {
+            window.alert(playerInfo.name + " has chosen to skip this fight! Goodbye!");
+            playerInfo.money = Math.max(0, playerInfo.money - 10);
+            return true;
+        }
+    return false;
+    }
+
+}
+
 //function to handle the fights
 var fight = function(enemy) {
     // repeat and excecute as long as the enemy robot is alive
     while(playerInfo.health > 0 && enemy.health > 0) {
-        var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-
-        //if player chooses to skip
-        if (promptFight === "skip" || promptFight === "SKIP") {
-            //confirm player wants to skip
-            var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-
-            //if yes (true) leave the fight
-            if (confirmSkip) {
-                window.alert(playerInfo.name + " has chosen to skip this fight! Goodbye!");
-                playerInfo.money = Math.max(0, playerInfo.money - 10);
-                console.log("playerInfo.money", playerInfo.money);
-                break;
-            }
+        if(fightOrSkip()) {
+            break;
         }
 
         //player attacks enemy
@@ -114,30 +156,6 @@ var fight = function(enemy) {
         }  
     }
 };
-
-//shop function
-var shop = function () {
-    var shopOptionPrompt = window.prompt("Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice.");
-    switch (shopOptionPrompt) {
-        case "REFILL":
-        case "refill":
-            playerInfo.refillHealth();
-            break;
-        case "UPGRADE":
-        case "upgrade":
-            playerInfo.upgradeAttack();
-            break;
-        case "LEAVE":
-        case "leave":
-            window.alert("Leaving the store.");
-            break;
-        default:
-            window.alert("You did not pick a valid option. Try again.");
-            shop();
-            break;
-    
-    }
-}
 
 //function to start a new game
 var startGame = function() {
