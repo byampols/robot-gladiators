@@ -9,11 +9,10 @@ A simple text-based browser game which uses alerts to allow a player to fight wi
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Table of Contents
-1. [Installation](#installation)
-2. [Usage](#usage)
-3. [License](#license)
-4. [Contributors](#contributors)
-5. [Questions](#questions)
+1. [Usage](#usage)
+2. [License](#license)
+3. [Contributors](#contributors)
+4. [Questions](#questions)
 
 ## Usage
 * Open the website and type your robot's name.
